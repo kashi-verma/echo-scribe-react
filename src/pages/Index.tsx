@@ -1,6 +1,5 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, MicOff, Copy, Trash2 } from 'lucide-react';
+import { Mic, MicOff, Copy, Trash2, Play, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { toast } from 'sonner';
@@ -122,33 +121,31 @@ const Index = () => {
             Speech to Text
           </h1>
           <p className="text-gray-600 text-lg">
-            Click the microphone and start speaking to convert your voice to text
+            Click Start to begin recording or End to stop recording
           </p>
         </div>
 
         {/* Main Controls */}
-        <div className="flex justify-center mb-8">
-          <div className="relative">
-            <Button
-              onClick={isListening ? stopListening : startListening}
-              size="lg"
-              className={`w-20 h-20 rounded-full transition-all duration-300 ${
-                isListening
-                  ? 'bg-red-500 hover:bg-red-600 animate-pulse shadow-lg shadow-red-200'
-                  : 'bg-blue-500 hover:bg-blue-600 shadow-lg shadow-blue-200'
-              }`}
-            >
-              {isListening ? (
-                <MicOff className="w-8 h-8" />
-              ) : (
-                <Mic className="w-8 h-8" />
-              )}
-            </Button>
-            
-            {isListening && (
-              <div className="absolute inset-0 rounded-full border-4 border-red-400 animate-ping"></div>
-            )}
-          </div>
+        <div className="flex justify-center gap-4 mb-8">
+          <Button
+            onClick={startListening}
+            disabled={isListening}
+            size="lg"
+            className="bg-green-500 hover:bg-green-600 disabled:bg-gray-400 transition-all duration-300 shadow-lg flex items-center gap-2 px-6 py-3"
+          >
+            <Play className="w-5 h-5" />
+            Start
+          </Button>
+          
+          <Button
+            onClick={stopListening}
+            disabled={!isListening}
+            size="lg"
+            className="bg-red-500 hover:bg-red-600 disabled:bg-gray-400 transition-all duration-300 shadow-lg flex items-center gap-2 px-6 py-3"
+          >
+            <Square className="w-5 h-5" />
+            End
+          </Button>
         </div>
 
         {/* Status */}
@@ -161,7 +158,7 @@ const Index = () => {
             <div className={`w-2 h-2 rounded-full mr-2 ${
               isListening ? 'bg-red-500 animate-pulse' : 'bg-gray-400'
             }`}></div>
-            {isListening ? 'Listening...' : 'Ready to listen'}
+            {isListening ? 'Recording...' : 'Ready to record'}
           </div>
         </div>
 
@@ -218,10 +215,10 @@ const Index = () => {
               <h3 className="font-semibold mb-3 text-gray-800">How to use:</h3>
               <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-blue-600 font-bold">1</span>
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <span className="text-green-600 font-bold">1</span>
                   </div>
-                  <span>Click the microphone button</span>
+                  <span>Click the Start button</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
@@ -230,10 +227,10 @@ const Index = () => {
                   <span>Allow microphone access</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center">
-                    <span className="text-pink-600 font-bold">3</span>
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                    <span className="text-red-600 font-bold">3</span>
                   </div>
-                  <span>Start speaking clearly</span>
+                  <span>Click End when finished</span>
                 </div>
               </div>
             </div>
